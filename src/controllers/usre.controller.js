@@ -4,7 +4,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
-import { pipeline } from "stream";
+
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -152,8 +152,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const loggoutUser = asyncHandler(async (req, res) => {
   await User.findByIdAndUpdate(req.user._id, {
-    $set: {
-      refreshToken: undefined,
+    $unset: {
+      refreshToken: 1,
     },
   });
 
